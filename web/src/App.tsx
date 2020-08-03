@@ -1,11 +1,12 @@
 import React from 'react';
 
-function App() {
-  return (
-    <div>
-      <h1>Proffy App</h1>
-    </div>
-  );
+import './assets/styles/global.css';
+import { Landing } from "./pages";
+
+function App () {
+    return (
+        <Landing />
+    );
 }
 
 export default App;
