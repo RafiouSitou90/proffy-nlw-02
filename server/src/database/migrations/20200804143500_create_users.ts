@@ -7,7 +7,11 @@ export async function up (knex: Knex): Promise<void> {
         table.string('avatar').notNullable();
         table.string('whatsapp').notNullable();
         table.string('bio').notNullable();
-        table.timestamps(true, true);
+
+        table.timestamp('created_at')
+            .defaultTo(knex.fn.now())
+            .notNullable()
+        ;
     });
 }
 

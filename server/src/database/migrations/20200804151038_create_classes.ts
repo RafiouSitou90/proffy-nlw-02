@@ -13,7 +13,11 @@ export async function up (knex: Knex): Promise<void> {
             .onDelete('CASCADE')
             .onUpdate('CASCADE')
         ;
-        table.timestamps(true, true);
+
+        table.timestamp('created_at')
+            .defaultTo(knex.fn.now())
+            .notNullable()
+        ;
     });
 }
 

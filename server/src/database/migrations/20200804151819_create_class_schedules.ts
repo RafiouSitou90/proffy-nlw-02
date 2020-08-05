@@ -16,7 +16,10 @@ export async function up (knex: Knex): Promise<void> {
             .onUpdate('CASCADE')
         ;
 
-        table.timestamps(true, true);
+        table.timestamp('created_at')
+            .defaultTo(knex.fn.now())
+            .notNullable()
+        ;
     });
 }
 
