@@ -2,35 +2,57 @@ import React, { FunctionComponent } from 'react';
 import whatsAppIcon from "../../assets/images/icons/whatsapp.svg";
 
 import "./styles.css";
+import {API} from "../../services";
 
-interface TeacherItemProps {}
+export interface Teacher {
+    id: number;
+    name: string;
+    avatar: string;
+    bio: string;
+    cost: number;
+    subject: string;
+    whatsapp: string;
+}
+
+interface TeacherItemProps {
+    teacher: Teacher
+}
 
 const TeacherItem: FunctionComponent<TeacherItemProps> = (props) => {
-
+    const { bio, name, avatar, cost, subject, whatsapp } = props.teacher;
+    
+    function createNewConnection () {
+        API.post('connections', {
+            user_id: props.teacher.id
+        })
+    }
     return (
         <article className="teacher-item">
             <header>
-                <img src="https://randomuser.me/api/portraits/men/86.jpg" alt="Rafiou Sitou"/>
+                <img src={avatar} alt={name} />
                 <div>
-                    <strong>Rafiou Sitou</strong>
-                    <span>Mathematics</span>
+                    <strong>{name}</strong>
+                    <span>{subject}</span>
                 </div>
             </header>
 
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi.
-                <br/><br/>
-                Nulla quis lorem ut libero malesuada feugiat. Quisque velit nisi, pretium ut lacinia in, elementum id enim.
+                {bio}
             </p>
             <footer>
                 <p>
                     Price / hour
-                    <strong>$80,00</strong>
+                    <strong>${cost}</strong>
                 </p>
-                <button type="button">
+                <a
+                    target="_blank"
+                    onClick={createNewConnection}
+                    href={`https://wa.me/${whatsapp}`}
+                    type="button"
+                >
                     <img src={whatsAppIcon} alt="WhatsApp"/>
                     Get in touch
-                </button>
+                </a>
             </footer>
         </article>
     );
