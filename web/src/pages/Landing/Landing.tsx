@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Link } from "react-router-dom";
 
 import logoImg from "../../assets/images/logo.svg";
@@ -9,8 +9,18 @@ import giveClassesIcon from "../../assets/images/icons/give-classes.svg";
 import purpleHeartIcon from "../../assets/images/icons/purple-heart.svg";
 
 import "./styles.css";
+import { API } from "../../services";
 
 const Landing = () => {
+    const [totalConnections, setTotalConnections] = useState(0);
+
+    useEffect(() => {
+        API.get('connections').then(response => {
+            const {total} = response.data;
+            setTotalConnections(total);
+        })
+    }, [totalConnections]);
+
     return (
         <div id="page-landing">
             <div id="page-landing-content" className="container">
@@ -36,7 +46,7 @@ const Landing = () => {
                 </div>
 
                 <span className="total-connections">
-                    More than 200 connections done <img src={purpleHeartIcon} alt="Purple heart"/>
+                    More than {totalConnections} connections done <img src={purpleHeartIcon} alt="Purple heart"/>
                 </span>
             </div>
         </div>
