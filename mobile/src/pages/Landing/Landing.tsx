@@ -1,6 +1,7 @@
 import React from 'react';
 import {Image, StyleSheet, Text, View} from "react-native";
 import { RectButton } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
 
 import landingImage from "../../assets/images/landing.png";
 import studyIcon from "../../assets/images/icons/study.png";
@@ -10,6 +11,11 @@ import heartIcon from "../../assets/images/icons/heart.png";
 interface LandingProps {}
 
 const Landing = ({}: LandingProps) => {
+    const navigation  = useNavigation();
+
+    function handleNavigationGiveClassesPage () {
+        navigation.navigate('GiveClasses')
+    }
 
     return (
         <View style={styles.container}>
@@ -20,12 +26,17 @@ const Landing = ({}: LandingProps) => {
                 <Text style={styles.titleBold}>What do you want to do?</Text>
             </Text>
             <View style={styles.buttonsContainer}>
-                <RectButton style={[styles.button, styles.buttonPrimary]}>
+                <RectButton
+                    style={[styles.button, styles.buttonPrimary]}
+                >
                     <Image source={studyIcon} />
                     <Text style={styles.buttonText}>Study</Text>
                 </RectButton>
 
-                <RectButton style={[styles.button, styles.buttonSecondary]}>
+                <RectButton
+                    style={[styles.button, styles.buttonSecondary]}
+                    onPress={handleNavigationGiveClassesPage}
+                >
                     <Image source={giveClassesIcon} />
                     <Text style={styles.buttonText}>Teach</Text>
                 </RectButton>
@@ -73,7 +84,6 @@ const styles = StyleSheet.create({
     button: {
         height: 120,
         width: "48%",
-        backgroundColor: "#333",
         borderRadius: 8,
         padding: 24,
         justifyContent: "space-between"
