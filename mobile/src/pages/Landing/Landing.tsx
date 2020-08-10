@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, StyleSheet, Text, View} from "react-native";
 import { RectButton } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
+
+import {API} from "../../services";
 
 import landingImage from "../../assets/images/landing.png";
 import studyIcon from "../../assets/images/icons/study.png";
@@ -12,6 +14,14 @@ interface LandingProps {}
 
 const Landing = ({}: LandingProps) => {
     const navigation  = useNavigation();
+    const [totalConnections, setTotalConnections] = useState(0);
+
+    useEffect(() => {
+        API.get('connections').then(response => {
+            const {total} = response.data;
+            setTotalConnections(total);
+        })
+    }, [totalConnections]);
 
     function handleNavigationGiveClassesPage () {
         navigation.navigate('GiveClasses')
@@ -48,7 +58,7 @@ const Landing = ({}: LandingProps) => {
             </View>
 
             <Text style={styles.totalConnections}>
-                More than 300 connections done {" "}
+                More than {totalConnections} connections done {" "}
                 <Image source={heartIcon} />
             </Text>
         </View>

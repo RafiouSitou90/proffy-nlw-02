@@ -9,9 +9,10 @@ import logoImage from "../../assets/images/logo.png";
 interface PageHeaderProps {
     title: string;
     children?: ReactNode;
+    headerRight?: ReactNode;
 }
 
-const PageHeader = ({ title, children }: PageHeaderProps) => {
+const PageHeader = ({ title, children, headerRight }: PageHeaderProps) => {
     const navigation = useNavigation();
 
     function handleNavigateGoBack () {
@@ -28,7 +29,12 @@ const PageHeader = ({ title, children }: PageHeaderProps) => {
                 <Image source={logoImage} resizeMode="contain" />
             </View>
 
-            <Text style={styles.title}>{title}</Text>
+            <View style={styles.header}>
+                <Text style={styles.title}>{title}</Text>
+                { headerRight }
+            </View>
+
+
 
             {children}
         </View>
@@ -42,6 +48,12 @@ const styles = StyleSheet.create({
     },
 
     topBar: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between"
+    },
+
+    header: {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between"

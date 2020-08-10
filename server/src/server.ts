@@ -4,7 +4,7 @@ import cors from "cors"
 import {ClassesRoute, ConnectionsRoute} from "./routes";
 
 const APP_PORT = 3333;
-const APP_SERVER = 'http://localhost';
+const APP_SERVER = '192.168.0.10';
 
 const app = express();
 

@@ -1,11 +1,28 @@
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 import {StyleSheet, View} from "react-native";
-import {PageHeader, TeacherItem} from "../../components";
 import {ScrollView} from "react-native-gesture-handler";
+import AsyncStorage from "@react-native-community/async-storage";
+import { useFocusEffect } from '@react-navigation/native';
+
+import {PageHeader, TeacherItem} from "../../components";
+import {Teacher} from "../../components/TeacherItem/TeacherItem";
 
 interface FavoritesProps {}
 
 const Favorites = ({}: FavoritesProps) => {
+    const [favorites, setFavorites] = useState([]);
+
+    function loadFavorites () {
+        AsyncStorage.getItem('favorites').then(response => {
+            if (response) {
+                setFavorites(JSON.parse(response));
+            }
+        });
+    }
+
+    useFocusEffect(
+        useCallback(() => { loadFavorites() }, [])
+    );
 
     return (
         <View style={styles.container}>
@@ -19,13 +36,15 @@ const Favorites = ({}: FavoritesProps) => {
                 }}
                 showsVerticalScrollIndicator={false}
             >
-                <TeacherItem />
-                <TeacherItem />
-                <TeacherItem />
-                <TeacherItem />
-                <TeacherItem />
-                <TeacherItem />
-                <TeacherItem />
+                { favorites.map((teacher: Teacher) => {
+                    return (
+                        <TeacherItem
+                            key={teacher.id}
+                            teacher={teacher}
+                            favorited={true}
+                        />
+                    )
+                }) }
             </ScrollView>
         </View>
     );
